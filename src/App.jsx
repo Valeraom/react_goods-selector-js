@@ -18,8 +18,10 @@ export const goods = [
 
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState(goods[8]);
-  const handleSetGood = good =>
-    setSelectedGood(prevGood => (prevGood === good ? '' : good));
+
+  const handleSetGood = good => setSelectedGood(good);
+  const handleCleanGood = () => setSelectedGood('');
+
   const isSelected = good => good === selectedGood;
 
   return (
@@ -32,7 +34,7 @@ export const App = () => {
               data-cy="ClearButton"
               type="button"
               className="delete ml-3"
-              onClick={() => handleSetGood()}
+              onClick={handleCleanGood}
             />
           </>
         ) : (
@@ -57,7 +59,9 @@ export const App = () => {
                   className={cn('button', {
                     'is-info': isSelected(good),
                   })}
-                  onClick={() => handleSetGood(good)}
+                  onClick={() =>
+                    isSelected(good) ? handleCleanGood() : handleSetGood(good)
+                  }
                 >
                   {isSelected(good) ? '-' : '+'}
                 </button>
